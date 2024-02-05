@@ -1,27 +1,40 @@
-from assertpy import assert_that
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import pytest
+from assertpy import assert_that
+from selenium.webdriver.common.by import By
+
 from base.automation_wrapper import WebDriverWrapper
 
 
 # inherited class WebDriverWrapper class to reuse driver variable
 class TestLoginFunction(WebDriverWrapper):
-    def test_valid_login(self):
+    testdata = [
+        ("admin", "pass", "OpenEMR"),
+        ("physician", "physician", "OpenEMR"),
+        ("clinician", "clinician", "OpenEMR")
+    ]
+    invalid_testdata = [
+        ("admin", "pass123", "Invalid username or password"),
+        ("physician", "physician123", "Invalid username or password"),
+        ("clinician123", "clinician", "Invalid username or password")
+    ]
+
+    @pytest.mark.parametrize("username, password, expected_title", testdata)
+    def test_valid_login(self, username, password, expected_title):
         print("validation login")
-        self.driver.find_element(By.ID, "authUser").send_keys("admin")
-        self.driver.find_element(By.ID, "clearPass").send_keys("pass")
+        self.driver.find_element(By.ID, "authUser").send_keys(username)
+        self.driver.find_element(By.ID, "clearPass").send_keys(password)
         self.driver.find_element(By.ID, "login-button").click()
         actual_title = self.driver.title
         print(actual_title)
-        assert_that(actual_title).matches("OpenEMR")
+        assert_that(actual_title).matches(expected_title)
 
-    def test_invalid_login(self):
-        self.driver.find_element(By.ID, "authUser").send_keys("admin")
-        self.driver.find_element(By.ID, "clearPass").send_keys("pass123")
+    @pytest.mark.parametrize("username, password, expected_title", invalid_testdata)
+    def test_invalid_login(self, username, password, expected_title):
+        self.driver.find_element(By.ID, "authUser").send_keys(username)
+        self.driver.find_element(By.ID, "clearPass").send_keys(password)
         self.driver.find_element(By.ID, "login-button").click()
         error_msg = self.driver.find_element(By.XPATH, "//*[contains(text(),'Invalid')]").text
-        assert_that(error_msg).is_equal_to("Invalid username or password")
+        assert_that(error_msg).is_equal_to(expected_title)
 
 
 class TestLoginUi(WebDriverWrapper):
