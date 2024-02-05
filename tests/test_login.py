@@ -11,16 +11,18 @@ class TestLoginFunction(WebDriverWrapper):
         print("validation login")
         self.driver.find_element(By.ID, "authUser").send_keys("admin")
         self.driver.find_element(By.ID, "clearPass").send_keys("pass")
-        self.driver.find_element(By.ID,"login-button").click()
+        self.driver.find_element(By.ID, "login-button").click()
         actual_title = self.driver.title
         print(actual_title)
         assert_that(actual_title).matches("OpenEMR")
+
     def test_invalid_login(self):
         self.driver.find_element(By.ID, "authUser").send_keys("admin")
         self.driver.find_element(By.ID, "clearPass").send_keys("pass123")
-        self.driver.find_element(By.ID,"login-button").click()
+        self.driver.find_element(By.ID, "login-button").click()
         error_msg = self.driver.find_element(By.XPATH, "//*[contains(text(),'Invalid')]").text
         assert_that(error_msg).is_equal_to("Invalid username or password")
+
 
 class TestLoginUi(WebDriverWrapper):
 
