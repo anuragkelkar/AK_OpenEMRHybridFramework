@@ -21,3 +21,10 @@ class TestLoginUi:
     def test_app_description(self):
         actual_desc = self.driver.find_element(By.XPATH, "//p[@class='text-center lead']").text
         assert_that(actual_desc).contains("Electronic Health Record")
+
+    def test_placeholder(self):
+        placeholder_value = self.driver.find_element(By.ID,"authUser").get_attribute("placeholder")
+        assert_that(placeholder_value).__eq__("Username")
+        placeholder_value2 = self.driver.find_element(By.ID, "clearPass").get_attribute("placeholder")
+        assert_that(placeholder_value2).__eq__("Password")
+        print(placeholder_value,placeholder_value2)
