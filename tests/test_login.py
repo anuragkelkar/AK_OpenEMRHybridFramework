@@ -3,22 +3,13 @@ from assertpy import assert_that
 from selenium.webdriver.common.by import By
 
 from base.automation_wrapper import WebDriverWrapper
+from utils.data_utils import DataSource
 
 
 # inherited class WebDriverWrapper class to reuse driver variable
 class TestLoginFunction(WebDriverWrapper):
-    testdata = [
-        ("admin", "pass", "OpenEMR"),
-        ("physician", "physician", "OpenEMR"),
-        ("clinician", "clinician", "OpenEMR")
-    ]
-    invalid_testdata = [
-        ("admin", "pass123", "Invalid username or password"),
-        ("physician", "physician123", "Invalid username or password"),
-        ("clinician123", "clinician", "Invalid username or password")
-    ]
 
-    @pytest.mark.parametrize("username, password, expected_title", testdata)
+    @pytest.mark.parametrize("username, password, expected_title", DataSource.valid_testdata)
     def test_valid_login(self, username, password, expected_title):
         print("validation login")
         self.driver.find_element(By.ID, "authUser").send_keys(username)
@@ -28,7 +19,7 @@ class TestLoginFunction(WebDriverWrapper):
         print(actual_title)
         assert_that(actual_title).matches(expected_title)
 
-    @pytest.mark.parametrize("username, password, expected_title", invalid_testdata)
+    @pytest.mark.parametrize("username, password, expected_title", DataSource.invalid_testdata)
     def test_invalid_login(self, username, password, expected_title):
         self.driver.find_element(By.ID, "authUser").send_keys(username)
         self.driver.find_element(By.ID, "clearPass").send_keys(password)
