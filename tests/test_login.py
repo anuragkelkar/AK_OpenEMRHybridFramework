@@ -16,10 +16,11 @@ class TestLoginFunction(WebDriverWrapper):
         print("validation login")
         login = LoginPage(self.driver)
         main = MainPage(self.driver)
+        main_title = main.get_main_title()
         login.enter_username(username)
         login.enter_password(password)
         login.click_login()
-        assert_that(main.get_main_title()).matches(expected_title)
+        assert_that(main_title).matches(expected_title)
 
     @pytest.mark.parametrize("username, password, expected_error", DataSource.invalid_testdata)
     def test_invalid_login(self, username, password, expected_error):

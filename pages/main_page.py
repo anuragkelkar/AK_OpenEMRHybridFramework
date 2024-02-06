@@ -5,7 +5,6 @@ class MainPage:
     def __init__(self, driver):
         self.__browser = driver
 
-    @property
     def get_main_title(self):
         return self.__browser.title
 
