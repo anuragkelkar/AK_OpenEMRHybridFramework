@@ -15,7 +15,7 @@ class TestLoginFunction(WebDriverWrapper):
         print("validation login")
         login = LoginPage(self.driver)
         login.enter_username(username)
-        login.enter_username(password)
+        login.enter_password(password)
         login.click_login()
         assert_that(self.driver.title).matches(expected_title)
 
@@ -23,7 +23,7 @@ class TestLoginFunction(WebDriverWrapper):
     def test_invalid_login(self, username, password, expected_title):
         login = LoginPage(self.driver)
         login.enter_username(username)
-        login.enter_username(password)
+        login.enter_password(password)
         login.click_login()
         error_msg = login.get_error_msg()
         assert_that(error_msg).is_equal_to(expected_title)
