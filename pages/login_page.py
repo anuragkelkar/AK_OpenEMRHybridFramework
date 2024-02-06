@@ -17,3 +17,16 @@ class LoginPage:
     def get_error_msg(self):
         error_msg = self.__browser.find_element(By.XPATH, "//*[contains(text(),'Invalid')]").text
         return error_msg
+
+    def get_app_desc(self):
+        return self.__browser.find_element(By.XPATH, "//p[@class='text-center lead']").text
+
+    def get_username_placeholder(self):
+        return self.__browser.find_element(By.ID, "authUser").get_attribute("placeholder")
+
+    def get_password_placeholder(self):
+        return self.__browser.find_element(By.ID, "clearPass").get_attribute("placeholder")
+
+    @property
+    def get_login_title(self):
+        return self.__browser.title
