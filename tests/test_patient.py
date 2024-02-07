@@ -5,9 +5,9 @@ from pages.search_add_page import SearchAddPage
 from utils.data_utils import DataSource
 import pytest
 
-class Patient(WebDriverWrapper):
-    @pytest.mark.parametrize("username, password", DataSource.valid_testdata)
-    def add_valid_patient(self,username,password):
+class TestPatient(WebDriverWrapper):
+    @pytest.mark.parametrize("username, password", DataSource.valid_login_data)
+    def test_add_valid_patient(self,username,password):
         login = LoginPage(self.driver)
         main = MainPage(self.driver)
         search_page = SearchAddPage(self.driver)

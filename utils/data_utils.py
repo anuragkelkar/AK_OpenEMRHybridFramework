@@ -5,11 +5,10 @@ from utils import read_utils
 
 
 class DataSource:
-    """valid_testdata = [
-        ("admin", "pass", "OpenEMR"),
-        ("physician", "physician", "OpenEMR"),
-        ("clinician", "clinician", "OpenEMR")
+    valid_login_data = [
+        ("admin", "pass")
     ]
+    """
     invalid_testdata = [
         ("admin", "pass123", "Invalid username or password"),
         ("physician", "physician123", "Invalid username or password"),
