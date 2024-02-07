@@ -11,7 +11,8 @@ from pages.main_page import MainPage
 # inherited class WebDriverWrapper class to reuse driver variable
 class TestLoginFunction(WebDriverWrapper):
 
-    @pytest.mark.parametrize("username, password, expected_title", DataSource.valid_testdata)
+    @pytest.mark.smoke
+    @pytest.mark.parampytesetrize("username, password, expected_title", DataSource.valid_testdata)
     def test_valid_login(self, username, password, expected_title):
         print("validation login")
         login = LoginPage(self.driver)
@@ -33,6 +34,7 @@ class TestLoginFunction(WebDriverWrapper):
 
 
 class TestLoginUi(WebDriverWrapper):
+    @pytest.mark.smoke
     def test_title(self):
         login = LoginPage(self.driver)
         assert_that("OpenEMR Login").matches(login.get_login_title)
