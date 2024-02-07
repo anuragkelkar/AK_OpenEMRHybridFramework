@@ -2,12 +2,13 @@ import pytest
 from selenium import webdriver
 import pandas
 from utils import read_utils
+import config
 
 class WebDriverWrapper:
     @pytest.fixture(scope="function", autouse=True)
     def setup(self):
         #runs before each test method
-        self.json_config = read_utils.get_json_data_into_dic("../test_data/config.json")
+        self.json_config = read_utils.get_json_data_into_dic(config.test_data_path+"\\config.json")
         browser = self.json_config.get("browser")
         if browser == "edge":
             self.driver=webdriver.Edge()

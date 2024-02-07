@@ -1,6 +1,8 @@
 import pandas
 import pyarrow
 import openpyxl
+
+import config
 from utils import read_utils
 
 
@@ -14,5 +16,5 @@ class DataSource:
         ("physician", "physician123", "Invalid username or password"),
         ("clinician123", "clinician", "Invalid username or password")
     ]"""
-    valid_testdata = read_utils.get_excel_data_into_list("../test_data/login_testdata.xlsx", "valid_login")
-    invalid_testdata = read_utils.get_excel_data_into_list("../test_data/login_testdata.xlsx", "invalid_login")
+    valid_testdata = read_utils.get_excel_data_into_list(config.test_data_path+"/login_testdata.xlsx", "valid_login")
+    invalid_testdata = read_utils.get_excel_data_into_list(config.test_data_path+"/login_testdata.xlsx", "invalid_login")
